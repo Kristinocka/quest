@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ankieta</title>
+</head>
+<body>
+ELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+<script type="text/javascript">
+    var xhr = new XMLHttpRequest();
+    // we defined the xhr
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState != 4) return;
+
+        if (this.status == 200) {
+            var data = JSON.parse(this.responseText);
+
+            var innerHTML=`Wszystkie wyniki: ${data.amount}<br/>`+data.result.map(x => x.q + '<br/>' + x.v.map(y => `${y.answer}: ${y.percentage}%`).join('<br/>')).join('<br/>')
+            console.log(innerHTML)
+            document.getElementsByTagName('body')[0].innerHTML=innerHTML
+        }
+
+        // end of state change: it can be after some time (async)
+    };
+
+    xhr.open('GET', '/answers', true);
+    xhr.send();
+
+</script>
+</body>
+</html>
