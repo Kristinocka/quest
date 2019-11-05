@@ -17,15 +17,18 @@ ELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
             var data = JSON.parse(this.responseText);
 
             var innerHTML=`Wszystkie wyniki: ${data.amount}<br/>`+data.result.map(x => x.q + '<br/>' + x.v.map(y => `${y.answer}: ${y.percentage}%`).join('<br/>')).join('<br/>')
-            console.log(innerHTML)
             document.getElementsByTagName('body')[0].innerHTML=innerHTML
         }
 
         // end of state change: it can be after some time (async)
     };
+    const fetch = () => {
+        xhr.open('GET', '/answers', true);
+        xhr.send()
+    }
 
-    xhr.open('GET', '/answers', true);
-    xhr.send();
+    fetch()
+    setInterval(fetch, 5000)
 
 </script>
 </body>
